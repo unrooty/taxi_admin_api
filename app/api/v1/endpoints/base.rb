@@ -14,14 +14,6 @@ module V1
 
       format :json
 
-      rescue_from Grape::Exceptions::InvalidMessageBody do
-        error!({
-                 error_code: 400, message: 'Some data in body is missed',
-                 note: 'Check docs and input correct data.'
-               },
-               400, 'Content_Type' => 'text/error')
-      end
-
       rescue_from Grape::Exceptions::ValidationErrors do |e|
         if e.message.include?('is missing')
           error!({

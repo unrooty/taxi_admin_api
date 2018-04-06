@@ -16,6 +16,12 @@ class Car
       step :user_exists?
       failure :user_not_exist!, fail_fast: true
 
+      step :user_driver?
+      failure :user_not_driver!, fail_fast: true
+
+      step :car_and_driver_affiliate_id_equals?
+      failure :affiliate_id_not_equal!, fail_fast: true
+
       step :user_has_no_car?
       failure :user_already_has_car!
 
@@ -40,6 +46,30 @@ class Car
       options[:errors] = {
         message: "User with id: #{params['car']['user_id']} not exists!",
         status: 404
+      }
+    end
+
+    def user_driver?(*)
+      return true unless @user
+      @user.driver?
+    end
+
+    def user_not_driver!(options, *)
+      options[:errors] = {
+        message: "User with user_id: #{@user.id} not driver",
+        status: 422
+      }
+    end
+
+    def car_and_driver_affiliate_id_equals?(_options, params:, **)
+      return true unless @user
+      @user.affiliate_id.equal?(params[:car][:affiliate_id])
+    end
+
+    def affiliate_id_not_equal!(options, *)
+      options[:errors] = {
+        message: 'Car and driver affiliate id must equal',
+        status: 422
       }
     end
 

@@ -69,5 +69,29 @@ RSpec.describe 'Cars endpoint' do
       expect_json(error: 'Token absent')
       expect_json_types(error: :string)
     end
+
+    it 'should not update car if user not admin or manager' do
+      get url,
+          headers: {
+            'Access-Token' => JsonWebToken.encode(
+              JsonWebToken::USER_IDENTIFIER => create(:user, role: 'Client').id
+            )
+          }
+
+      expect_status(403)
+      expect_json(error: 'Forbidden')
+      expect_json_types(error: :string)
+
+      get url, params: { car: attributes_for(:car) },
+               headers: {
+                 'Access-Token' => JsonWebToken.encode(
+                   JsonWebToken::USER_IDENTIFIER => create(:user, role: 'Driver').id
+                 )
+               }
+
+      expect_status(403)
+      expect_json(error: 'Forbidden')
+      expect_json_types(error: :string)
+    end
   end
 end

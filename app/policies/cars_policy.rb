@@ -4,6 +4,15 @@ class CarsPolicy
     @model = model
   end
 
+  def can_update_car?
+    if @user.manager? && @user.affiliate_id == @model.affiliate_id
+      return true
+    elsif @user.manager? && @user.affiliate_id != @model.affiliate_id
+      return false
+    end
+    @user.admin?
+  end
+
   def can_work_with_car?
     @user.role.in?(%w[Admin Manager])
   end
