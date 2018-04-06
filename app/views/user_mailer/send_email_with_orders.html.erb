@@ -1,0 +1,27 @@
+<h1>
+  <%= t('orders_report') %>
+</h1>
+<h3>
+  <%= t('orders_report_intro', user_first_name: @user.first_name, user_last_name: @user.last_name) %>
+</h3>
+<table>
+  <thead>
+    <tr class="head">
+      <th> # </th>
+      <th> <%= t('activerecord.attributes.order.name') %> </th>
+      <th> <%= t('activerecord.attributes.order.phone') %> </th>
+      <th> <%= t('activerecord.attributes.order.start_point') %> </th>
+      <th> <%= t('activerecord.attributes.order.end_point') %> </th>
+  </thead>
+  <tbody>
+    <%- @orders.each { |order| %>
+      <tr class="body">
+        <th> <%= order.id %> </th>
+        <th> <%= order.client_name %> </th>
+        <th> +375-<%= order.client_phone %> </th>
+        <th> <%= order.start_point %> </th>
+        <th> <%= order.end_point %> </th>
+      </tr>
+    <% } %>
+  </tbody>
+</table>

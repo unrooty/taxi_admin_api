@@ -1,0 +1,12 @@
+<p>
+  <%= t('welcome') %>
+</p>
+
+<p>
+  <%= t('confirm_account') %>
+</p>
+
+<p>
+  <%= link_to t('confirm_link'),
+              "http://#{@url}/api/v1/account/confirm_email?confirmation_token=#{@user.confirmation_token}"%>
+</p>

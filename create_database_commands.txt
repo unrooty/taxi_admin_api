@@ -1,0 +1,6 @@
+sudo -u postgres psql -d taxi_api_test < db/structure.sql
+sudo -u postgres psql
+CREATE DATABASE taxi_api_dev OWNER test_user;
+CREATE DATABASE taxi_api_test OWNER test_user;
+\q
+sequel -m db/migrate config/database.yml

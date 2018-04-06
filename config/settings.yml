@@ -1,0 +1,9 @@
+development:
+  url: 'localhost:3000'
+  from_email: 'example.email.for.diploma@mail.ru'
+production:
+  url: 'https://taxi-station-api.herokuapp.com'
+  from_email: 'example.email.for.diploma@mail.ru'
+test:
+  url: 'localhost:3000'
+  from_email: 'example.email.for.diploma@mail.ru'

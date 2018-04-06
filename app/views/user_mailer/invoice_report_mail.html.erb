@@ -1,0 +1,37 @@
+<h1>
+  <%= t('invoice_info') %>
+</h1>
+<h3>
+  <ul class="invoice-report">
+    <li>
+      <%= t('activerecord.attributes.user.first_name') %>: <%= @user.first_name %>
+    </li>
+    <li>
+      <%= t('activerecord.attributes.order.phone') %>: +375-<%= @order.client_phone %>
+    </li>
+    <li>
+      <%= t('activerecord.attributes.order.start_point') %>: <%= @order.start_point %>
+    </li>
+    <li>
+      <%= t('activerecord.attributes.order.end_point') %>: <%= @order.end_point %>
+    </li>
+    <li>
+      <%= t('total_price') %>: <%= @invoice.total_price %>
+    </li>
+    <li>
+      <%= t('activerecord.attributes.billing.payed_amount') %>: <%= @invoice.payed_amount %>
+    </li>
+    <li>
+      <%= t('indebtedness') %>: <%= @invoice.indebtedness %>
+    </li>
+  </ul>
+</h3>
+<% if @invoice.indebtedness > 0 %>
+  <h3 class="invoice-report">
+    <%= t('invoice_warning') %>
+  </h3>
+<% end %>
+<h2 class="invoice-report">
+  <%= t('welcome_email_intro4') %>
+</h2>
+

@@ -1,0 +1,12 @@
+<p>
+  Hello,
+</p>
+
+<p>
+  You can activate your account through the link below:
+</p>
+
+<p>
+  <%= link_to 'Activate my account',
+              "http://#{@url}/api/v1/account/activate?activation_token=#{@user.activation_token}"%>
+</p>
