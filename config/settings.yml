@@ -1,9 +1,12 @@
 development:
-  url: 'localhost:3000'
+  url: 'http://localhost:3000'
   from_email: 'example.email.for.diploma@mail.ru'
+  docs_url: 'localhost:3000'
 production:
-  url: 'https://taxi-station-api.herokuapp.com'
+  url: 'https://taxi-admin-api.herokuapp.com'
   from_email: 'example.email.for.diploma@mail.ru'
+  docs_url: 'taxi-admin-api.herokuapp.com'
 test:
-  url: 'localhost:3000'
+  url: 'http://localhost:3000'
   from_email: 'example.email.for.diploma@mail.ru'
+  docs_url: 'localhost:3000'

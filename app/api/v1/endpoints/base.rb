@@ -67,7 +67,7 @@ module V1
               'Operations with orders and invoices of orders (specified for working staff.).'
           }
         ],
-        host: APP_SETTINGS['url'].remove('https://'),
+        host: APP_SETTINGS['docs_url'],
         models: [
           V1::Entities::Order,
           V1::Entities::Auth
