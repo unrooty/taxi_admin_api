@@ -8,7 +8,7 @@ require_relative '../validators/phone_length_validator'
 module V1
   module Endpoints
     class Base < Grape::API
-      helpers ResultHandler,
+      helpers Handler,
               Authentication::AuthHelpers,
               DocHelper
 
@@ -30,6 +30,10 @@ module V1
         end
       end
 
+      rescue_from Handler::RequestError do |e|
+        error!({ error: e.message }, e.status)
+      end
+
       rescue_from :all do |e|
         error!({
                  error_code: 500, message: e,
@@ -37,8 +41,9 @@ module V1
                },
                500, 'Content_Type' => 'text/error')
       end
+
       namespace do
-        mount V1::Endpoints::Account
+        mount V1::Endpoints::Accounts
         before { authenticate_user! }
         mount V1::Endpoints::Affiliates
         mount V1::Endpoints::Cars

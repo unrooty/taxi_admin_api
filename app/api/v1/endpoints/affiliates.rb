@@ -12,9 +12,7 @@ module V1
              http_codes: DocHelper.index_codes('affiliates')
 
         get '/' do
-          result = Affiliate::Index.call(params: params,
-                                         current_user: current_user)
-          handle_successful(result) do
+          handle(Affiliate::Index.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Affiliate
           end
         end
@@ -38,14 +36,8 @@ module V1
         end
 
         post '/' do
-          result = Affiliate::Create.call(params: params,
-                                          current_user: current_user)
-          handle_successful(result) do
+          handle(Affiliate::Create.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Affiliate
-          end
-
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
           end
         end
 
@@ -57,9 +49,7 @@ module V1
              http_codes: DocHelper.show_codes('affiliate')
 
         get ':id/workers' do
-          result = Affiliate::Workers.call(params: params,
-                                           current_user: current_user)
-          handle_successful(result) do
+          handle(Affiliate::Workers.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::User
           end
         end
@@ -72,9 +62,7 @@ module V1
              http_codes: DocHelper.show_codes('affiliate')
 
         get ':id' do
-          result = Affiliate::Show.call(params: params,
-                                        current_user: current_user)
-          handle_successful(result) do
+          handle(Affiliate::Show.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Affiliate
           end
         end
@@ -98,14 +86,8 @@ module V1
         end
 
         patch ':id' do
-          result = Affiliate::Update.call(params: params,
-                                          current_user: current_user)
-          handle_successful(result) do
+          handle(Affiliate::Update.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Affiliate
-          end
-
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
           end
         end
 
@@ -117,9 +99,7 @@ module V1
              http_codes: DocHelper.delete_codes('affiliate')
 
         delete ':id' do
-          result = Affiliate::Delete.call(params: params,
-                                          current_user: current_user)
-          handle_successful(result) do
+          handle(Affiliate::Delete.call(params: params, current_user: current_user)) do
             status :no_content
           end
         end

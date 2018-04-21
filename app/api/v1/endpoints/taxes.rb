@@ -12,10 +12,7 @@ module V1
              http_codes: DocHelper.index_codes('taxes')
 
         get '/' do
-          p 'hello'
-          result = Tax::Index.call(params: params,
-                                          current_user: current_user)
-          handle_successful(result) do
+          handle(Tax::Index.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Tax
           end
         end
@@ -42,14 +39,8 @@ module V1
         end
 
         post '/' do
-          result = Tax::Create.call(params: params,
-                                           current_user: current_user)
-          handle_successful(result) do
+          handle(Tax::Create.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Tax
-          end
-
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
           end
         end
 
@@ -61,9 +52,7 @@ module V1
              http_codes: DocHelper.show_codes('tax')
 
         get ':id' do
-          result = Tax::Show.call(params: params,
-                                         current_user: current_user)
-          handle_successful(result) do
+          handle(Tax::Show.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Tax
           end
         end
@@ -92,14 +81,8 @@ module V1
         end
 
         patch ':id' do
-          result = Tax::Update.call(params: params,
-                                           current_user: current_user)
-          handle_successful(result) do
+          handle(Tax::Update.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Tax
-          end
-
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
           end
         end
 
@@ -120,14 +103,8 @@ module V1
                                         model: V1::Entities::Tax)
 
         delete ':id' do
-          result = Tax::Delete.call(params: params,
-                                           current_user: current_user)
-          handle_successful(result) do
+          handle(Tax::Delete.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Tax
-          end
-
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
           end
         end
 
@@ -176,9 +153,7 @@ module V1
         end
 
         post '/set_default' do
-          result = Tax::SetDefault.call(params: params,
-                                               current_user: current_user)
-          handle_successful(result) do
+          handle(Tax::SetDefault.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Tax
           end
         end

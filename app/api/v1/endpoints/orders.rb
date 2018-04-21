@@ -12,9 +12,7 @@ module V1
              http_codes: DocHelper.index_codes('orders')
 
         get '/new' do
-          result = Order::Index::New.call(params: params,
-                                                 current_user: current_user)
-          handle_successful(result) do
+          handle(Order::Index::New.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Order
           end
         end
@@ -27,9 +25,7 @@ module V1
              http_codes: DocHelper.index_codes('orders')
 
         get '/in_progress' do
-          result = Order::Index::InProgress.call(params: params,
-                                                        current_user: current_user)
-          handle_successful(result) do
+          handle(Order::Index::InProgress.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Order
           end
         end
@@ -42,9 +38,7 @@ module V1
              http_codes: DocHelper.index_codes('orders')
 
         get '/completed' do
-          result = Order::Index::Completed.call(params: params,
-                                                       current_user: current_user)
-          handle_successful(result) do
+          handle(Order::Index::Completed.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Order
           end
         end
@@ -81,14 +75,8 @@ module V1
         end
 
         post '/' do
-          result = Order::Create.call(params: params,
-                                             current_user: current_user)
-          handle_successful(result) do
+          handle(Order::Create.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Order
-          end
-
-          handle_invalid(result) do
-            error!(@contract.default, 422)
           end
         end
 
@@ -100,9 +88,7 @@ module V1
              http_codes: DocHelper.show_codes('order')
 
         get ':id' do
-          result = Order::Show.call(params: params,
-                                           current_user: current_user)
-          handle_successful(result) do
+          handle(Order::Show.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Order
           end
         end
@@ -139,14 +125,8 @@ module V1
         end
 
         patch ':id' do
-          result = Order::Update.call(params: params,
-                                             current_user: current_user)
-          handle_successful(result) do
+          handle(Order::Update.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Order
-          end
-
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
           end
         end
 
@@ -158,9 +138,7 @@ module V1
              http_codes: DocHelper.delete_codes('order')
 
         delete ':id' do
-          result = Order::Delete.call(params: params,
-                                             current_user: current_user)
-          handle_successful(result) do
+          handle(Order::Delete.call(params: params, current_user: current_user)) do
             status :no_content
           end
         end

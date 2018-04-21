@@ -12,9 +12,7 @@ module V1
              http_codes: DocHelper.index_codes('users')
 
         get '/' do
-          result = User::Index.call(params: params,
-                                           current_user: current_user)
-          handle_successful(result) do
+          handle(User::Index.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::User
           end
         end
@@ -77,14 +75,8 @@ module V1
         end
 
         post '/' do
-          result = User::Create.call(params: params,
-                                            current_user: current_user)
-          handle_successful(result) do
+          handle(User::Create.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::User
-          end
-
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
           end
         end
 
@@ -96,9 +88,7 @@ module V1
              http_codes: DocHelper.show_codes('user')
 
         get ':id' do
-          result = User::Show.call(params: params,
-                                          current_user: current_user)
-          handle_successful(result) do
+          handle(User::Show.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::User
           end
         end
@@ -142,13 +132,9 @@ module V1
                  ]
 
         patch ':id/activate' do
-          result = User::Activate.call(params: params,
-                                              current_user: current_user)
-          handle_successful(result) do
+          handle(User::Activate.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::User
           end
-
-          handle_invalid(result)
         end
 
         desc '',
@@ -190,13 +176,9 @@ module V1
                  ]
 
         patch ':id/deactivate' do
-          result = User::Deactivate.call(params: params,
-                                                current_user: current_user)
-          handle_successful(result) do
+          handle(User::Deactivate.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::User
           end
-
-          handle_invalid(result)
         end
 
         desc '',
@@ -257,14 +239,8 @@ module V1
         end
 
         patch ':id' do
-          result = User::Update.call(params: params,
-                                            current_user: current_user)
-          handle_successful(result) do
+          handle(User::Update.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::User
-          end
-
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
           end
         end
 
@@ -276,9 +252,7 @@ module V1
              http_codes: DocHelper.delete_codes('user')
 
         delete ':id' do
-          result = User::Delete.call(params: params,
-                                            current_user: current_user)
-          handle_successful(result) do
+          handle(User::Delete.call(params: params, current_user: current_user)) do
             status :no_content
           end
         end

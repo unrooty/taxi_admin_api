@@ -12,9 +12,7 @@ module V1
              http_codes: DocHelper.index_codes('cars')
 
         get '/' do
-          result = Car::Index.call(params: params,
-                                   current_user: current_user)
-          handle_successful(result) do
+          handle(Car::Index.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Car
           end
         end
@@ -64,14 +62,8 @@ module V1
         end
 
         post '/' do
-          result = Car::Create.call(params: params,
-                                    current_user: current_user)
-          handle_successful(result) do
+          handle(Car::Create.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Car
-          end
-
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
           end
         end
 
@@ -83,9 +75,7 @@ module V1
              http_codes: DocHelper.show_codes('car')
 
         get ':id' do
-          result = Car::Show.call(params: params,
-                                  current_user: current_user)
-          handle_successful(result) do
+          handle(Car::Show.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Car
           end
         end
@@ -137,14 +127,8 @@ module V1
         end
 
         patch ':id' do
-          result = Car::Update.call(params: params,
-                                    current_user: current_user)
-          handle_successful(result) do
+          handle(Car::Update.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Car
-          end
-
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
           end
         end
 
@@ -156,9 +140,7 @@ module V1
              http_codes: DocHelper.delete_codes('car')
 
         delete ':id' do
-          result = Car::Delete.call(params: params,
-                                    current_user: current_user)
-          handle_successful(result) do
+          handle(Car::Delete.call(params: params, current_user: current_user)) do
             status :no_content
           end
         end

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class JsonWebToken
-  ALGORITHM = 'HS256'
-  ACCESS_TOKEN_TTL = 30.minutes
-  REFRESH_TOKEN_TTL = 20.days
-  USER_IDENTIFIER = :user
+  ALGORITHM ||= 'HS256'
+  ACCESS_TOKEN_TTL ||= 30.minutes
+  REFRESH_TOKEN_TTL ||= 20.days
+  USER_IDENTIFIER ||= :user
 
   def self.encode(payload, expiration = (Time.now.utc + ACCESS_TOKEN_TTL).to_i)
     payload[:exp] = expiration

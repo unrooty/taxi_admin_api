@@ -24,14 +24,8 @@ module V1
         end
 
         post ':order_id/invoice' do
-          result = Invoice::Create.call(params: params,
-                                               current_user: current_user)
-          handle_successful(result) do
+          handle(Invoice::Create.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Invoice
-          end
-
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
           end
         end
 
@@ -43,14 +37,8 @@ module V1
              http_codes: DocHelper.show_codes('invoice')
 
         get ':order_id/invoice' do
-          result = Invoice::Update::Present.call(params: params,
-                                                        current_user: current_user)
-          handle_successful(result) do
+          handle(Invoice::Update::Present.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Invoice
-          end
-
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
           end
         end
 
@@ -70,14 +58,8 @@ module V1
         end
 
         patch ':order_id/invoice' do
-          result = Invoice::Update.call(params: params,
-                                               current_user: current_user)
-          handle_successful(result) do
+          handle(Invoice::Update.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Invoice
-          end
-
-          handle_invalid(result) do
-            error!(@contract.error!, 422)
           end
         end
       end

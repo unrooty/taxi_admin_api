@@ -51,19 +51,15 @@ module V1
         end
 
         post ':order_id/assign_car' do
-          if current_user.driver?
-            result = CarAssignment::DriverCarAssignment.call(params: params,
-                                                                    current_user: current_user)
+          if current_user&.driver?
+            handle(CarAssignment::DriverCarAssignment.call(params: params, current_user: current_user)) do
+              present @model, with: V1::Entities::Order
+            end
           else
-            result = CarAssignment::Create.call(params: params,
-                                                       current_user: current_user)
+            handle(CarAssignment::Create.call(params: params, current_user: current_user)) do
+              present @model, with: V1::Entities::Order
+            end
           end
-
-          handle_successful(result) do
-            present @model, with: V1::Entities::Order
-          end
-
-          handle_invalid(result)
         end
 
         desc '',
@@ -113,64 +109,9 @@ module V1
         end
 
         post ':order_id/reassign_car' do
-          result = CarAssignment::Update.call(params: params,
-                                                     current_user: current_user)
-          handle_successful(result) do
+          handle(CarAssignment::Update.call(params: params, current_user: current_user)) do
             present @model, with: V1::Entities::Order
           end
-
-          handle_invalid(result)
-        end
-
-        desc '',
-             nickname: 'assignCarAsDriver',
-             detail: 'Assigns car as driver.',
-             summary: 'Assign car as driver.',
-             http_codes: [
-               {
-                 code: 201,
-                 message: 'Car assigned.'
-               },
-               {
-                 code: 400,
-                 message: 'One or more params missed.',
-                 model: V1::Entities::ClientError
-               },
-               {
-                 code: 401,
-                 message: 'No access token present or token invalid.',
-                 model: V1::Entities::AccessError
-               },
-               {
-                 code: 403,
-                 message: 'Access forbidden.',
-                 model: V1::Entities::AccessError
-               },
-               {
-                 code: 404,
-                 message: 'Car or order not found.',
-                 model: V1::Entities::ClientError
-               },
-               {
-                 code: 422,
-                 message: 'Validation error.',
-                 model: V1::Entities::ClientError
-               },
-               {
-                 code: 500,
-                 message: 'Server Error.',
-                 model: V1::Entities::ApiError
-               }
-             ]
-
-        post ':order_id/assign_car_as_driver' do
-          result = CarAssignment::DriverCarAssignment(params: params,
-                                                             current_user: current_user)
-          handle_successful(result) do
-            present @model, with
-          end
-
-          handle_invalid(result)
         end
       end
     end

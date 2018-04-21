@@ -65,7 +65,7 @@ RSpec.describe 'Affiliates endpoint' do
 
       expect_status(422)
 
-      expect_json_types('error', name: :array_of_strings)
+      expect_json_types(error: :string)
 
       expect(response.body).to include('already been taken')
     end

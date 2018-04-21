@@ -1,7 +1,8 @@
 module V1
   module Endpoints
-    class Account < Grape::API
+    class Accounts < Grape::API
       resource :account do
+
         params do
           requires :account, type: Hash do
             requires :email, allow_blank: false
@@ -9,14 +10,10 @@ module V1
             requires :device_id, allow_blank: false
           end
         end
-        post '/login' do
-          result = ::Account::Login.call(params: params)
-          handle_successful(result) do
-            present @model, with: V1::Entities::Auth
-          end
 
-          handle_invalid(result) do
-            error!(@contract.errors, 422)
+        post '/login' do
+          handle(::Account::Login.call(params: params)) do
+            present @model, with: V1::Entities::Auth
           end
         end
       end
