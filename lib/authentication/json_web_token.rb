@@ -19,6 +19,6 @@ class JsonWebToken
   end
 
   def self.key
-    Rails.application.secrets.secret_jwt_key
+    Rails.application.credentials.secret_jwt_key
   end
 end
