@@ -3,11 +3,11 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.1'
+ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'pg'
-gem 'rails', '~> 5.2.0.rc2'
+gem 'rails', '~> 5.2.3'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -32,12 +32,21 @@ gem 'grape-swagger-entity'
 gem 'grape-swagger-rails'
 gem 'jwt'
 gem 'pundit'
-gem 'rails-i18n', '~> 5.1' # For 5.0.x, 5.1.x and 5.2.x
+gem 'rails-i18n'
 gem 'rubocop', require: false
 gem 'sequel-devise'
 gem 'sequel-devise-generators'
 gem 'sequel-rails'
-gem 'trailblazer-rails'
+# FIX: TRAILBLAZER CAN NOT BE UPDATED BECAUSE OF CHANGES IN DSL. IT PROBABLY WIL BE REPLACED WITH GEM FLOW
+
+gem 'reform-rails', '~> 0.1'
+gem 'trailblazer-rails', '~> 2.1.7'
+gem 'trailblazer', '= 2.1.0.rc1'
+gem 'trailblazer-macro', '= 2.1.0rc1'
+gem 'trailblazer-activity', '= 0.7.1'
+gem 'trailblazer-operation', '= 0.4.1'
+
+##########################################################################################################
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
