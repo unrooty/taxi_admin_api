@@ -104,7 +104,7 @@ module Account
 
     def generate_access_token(_options, **)
       @access_token = JsonWebToken.encode(
-        { JsonWebToken::USER_IDENTIFIER => @user.id },
+        { JsonWebToken::USER_IDENTIFIER => { id: @user.id, role: @user.role } },
         @access_time.to_i
       )
     end
