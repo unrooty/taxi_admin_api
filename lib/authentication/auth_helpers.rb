@@ -24,7 +24,7 @@ module Authentication
     def token_expired?
       token = JsonWebToken.decode(@token)
       return error!('Token invalid', 401) unless token
-      @user = User[token['user']]
+      @user = User[token['user']['id']]
     end
 
     def check_account
